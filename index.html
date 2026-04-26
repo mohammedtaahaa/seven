@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SE7EN – Premium Jerseys</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    <span class="logo-se">SE</span><span class="logo-7">7</span><span class="logo-en">EN</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="cart-btn" onclick="toggleCart()">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" onclick="toggleMenu()">✕</button>
+  <ul>
+    <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+    <li><a href="#products" onclick="toggleMenu()">Shop</a></li>
+    <li><a href="#about" onclick="toggleMenu()">About</a></li>
+    <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">JERSEY</div>
+  <div class="hero-content">
+    <p class="hero-tagline">DROP. WEAR. DOMINATE.</p>
+    <h1 class="hero-title">PREMIUM<br/><span class="hero-accent">JERSEYS</span><br/>FOR EVERY FAN</h1>
+    <p class="hero-sub">Authentic. Bold. Exclusive. Your jersey. Your identity.</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn-primary">SHOP NOW</a>
+      <a href="#about" class="btn-outline">OUR STORY</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <span>EST.</span>
+    <span class="badge-num">2026</span>
+  </div>
+  <div class="hero-scroll">SCROLL ↓</div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>PREMIUM JERSEYS</span><span>•</span>
+    <span>FREE DELIVERY</span><span>•</span>
+    <span>AUTHENTIC QUALITY</span><span>•</span>
+    <span>SE7EN EXCLUSIVE</span><span>•</span>
+    <span>PREMIUM JERSEYS</span><span>•</span>
+    <span>FREE DELIVERY</span><span>•</span>
+    <span>AUTHENTIC QUALITY</span><span>•</span>
+    <span>SE7EN EXCLUSIVE</span><span>•</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div class="section-header">
+    <span class="section-label">THE COLLECTION</span>
+    <h2 class="section-title">SHOP ALL <span class="accent">JERSEYS</span></h2>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">ALL</button>
+    <button class="filter-btn" onclick="filterProducts('football', this)">FOOTBALL</button>
+    <button class="filter-btn" onclick="filterProducts('basketball', this)">BASKETBALL</button>
+    <button class="filter-btn" onclick="filterProducts('cricket', this)">CRICKET</button>
+    <button class="filter-btn" onclick="filterProducts('retro', this)">RETRO</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Products rendered by JS -->
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🚚</div>
+      <h3>FREE DELIVERY</h3>
+      <p>On all orders above ₹999</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏆</div>
+      <h3>AUTHENTIC QUALITY</h3>
+      <p>100% genuine jersey fabric</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <h3>EASY RETURNS</h3>
+      <p>7-day hassle-free returns</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>SECURE PAYMENT</h3>
+      <p>Powered by Razorpay</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-text">
+    <span class="section-label">OUR STORY</span>
+    <h2>MORE THAN A <span class="accent">JERSEY</span></h2>
+    <p>SE7EN was born from a passion for sport and style. We bring premium jerseys from the world's biggest clubs and teams directly to fans across India. Every jersey tells a story — wear yours.</p>
+    <p>From football to basketball, cricket to retro classics — if you bleed sport, SE7EN is your store.</p>
+    <a href="#products" class="btn-primary">EXPLORE COLLECTION</a>
+  </div>
+  <div class="about-visual">
+    <div class="about-num">7</div>
+    <div class="about-tag">THE NUMBER OF LEGENDS</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-header">
+    <span class="section-label">GET IN TOUCH</span>
+    <h2 class="section-title">CONTACT <span class="accent">US</span></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon">📞</div>
+      <h3>CALL / WHATSAPP</h3>
+      <a href="tel:6381390026">+91 6381390026</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">✉️</div>
+      <h3>EMAIL</h3>
+      <a href="mailto:thaham06@gmail.com">thaham06@gmail.com</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">📸</div>
+      <h3>INSTAGRAM</h3>
+      <a href="https://www.instagram.com/se7en.inn" target="_blank">@se7en.inn</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">
+    <span class="logo-se">SE</span><span class="logo-7">7</span><span class="logo-en">EN</span>
+  </div>
+  <p class="footer-tagline">Drop. Wear. Dominate.</p>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#products">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 SE7EN. All rights reserved.</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/916381390026?text=Hi%20SE7EN!%20I%20want%20to%20know%20more%20about%20your%20jerseys." class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+    <path fill="#fff" d="M16 0C7.164 0 0 7.163 0 16c0 2.822.736 5.463 2.018 7.757L0 32l8.468-2.02A15.93 15.93 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 01-6.73-1.83l-.483-.287-4.998 1.193 1.215-4.865-.315-.498A13.267 13.267 0 012.667 16C2.667 8.636 8.637 2.667 16 2.667S29.333 8.636 29.333 16 23.363 29.333 16 29.333zm7.27-9.927c-.399-.2-2.36-1.164-2.727-1.298-.366-.133-.633-.2-.9.2s-1.032 1.298-1.265 1.565c-.233.266-.466.3-.865.1-.4-.2-1.688-.622-3.215-1.982-1.188-1.059-1.99-2.368-2.223-2.768-.233-.4-.025-.616.175-.815.18-.178.4-.466.6-.7.2-.233.266-.4.4-.666.133-.267.067-.5-.033-.7-.1-.2-.9-2.168-1.233-2.967-.325-.78-.655-.674-.9-.687l-.766-.013c-.267 0-.7.1-1.066.5s-1.4 1.365-1.4 3.33 1.433 3.864 1.633 4.13c.2.267 2.82 4.305 6.832 6.035.955.412 1.7.659 2.281.844.958.306 1.83.263 2.52.16.769-.115 2.36-.965 2.694-1.897.333-.932.333-1.731.233-1.898-.1-.166-.366-.266-.766-.466z"/>
+  </svg>
+  <span>Chat</span>
+</a>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h2>YOUR CART</h2>
+    <button onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p class="empty-cart">Your cart is empty</p>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span>TOTAL</span>
+      <span id="cartTotal">₹0</span>
+    </div>
+    <button class="btn-primary full-width" onclick="proceedToCheckout()">CHECKOUT →</button>
+  </div>
+</div>
+
+<!-- ADDRESS MODAL -->
+<div class="modal-overlay" id="addressModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addressModal')">✕</button>
+    <h2>DELIVERY ADDRESS</h2>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="addrName" placeholder="Your full name"/>
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" id="addrPhone" placeholder="+91 XXXXXXXXXX"/>
+    </div>
+    <div class="form-group">
+      <label>Address Line 1</label>
+      <input type="text" id="addrLine1" placeholder="House / Flat / Street"/>
+    </div>
+    <div class="form-group">
+      <label>Address Line 2</label>
+      <input type="text" id="addrLine2" placeholder="Area / Colony (optional)"/>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" id="addrCity" placeholder="City"/>
+      </div>
+      <div class="form-group">
+        <label>Pincode</label>
+        <input type="text" id="addrPin" placeholder="6-digit PIN"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>State</label>
+      <input type="text" id="addrState" placeholder="State"/>
+    </div>
+    <button class="btn-primary full-width" onclick="proceedToPayment()">PROCEED TO PAYMENT →</button>
+  </div>
+</div>
+
+<!-- SIZE MODAL -->
+<div class="modal-overlay" id="sizeModal">
+  <div class="modal size-modal">
+    <button class="modal-close" onclick="closeModal('sizeModal')">✕</button>
+    <h2>SELECT SIZE</h2>
+    <p class="size-product-name" id="sizeProductName"></p>
+    <div class="size-grid" id="sizeGrid"></div>
+    <button class="btn-primary full-width" onclick="confirmAddToCart()">ADD TO CART →</button>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal success-modal">
+    <div class="success-icon">✓</div>
+    <h2>ORDER PLACED!</h2>
+    <p>Thank you for shopping with SE7EN.<br/>Your jersey is on its way!</p>
+    <p class="order-id" id="successOrderId"></p>
+    <button class="btn-primary full-width" onclick="closeModal('successModal'); resetCart()">CONTINUE SHOPPING</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
