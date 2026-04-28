@@ -4,12 +4,12 @@
 // ===========================
 
 // ====== SUPABASE CONFIG ======
-const SUPABASE_URL = 'https://qqbrvcbhjtkeppgwqrnp.supabase.co/rest/v1/';       // Replace with your Supabase project URL
+const SUPABASE_URL = 'https://qqbrvcbhjtkeppgwqrnp.supabase.co/rest/v1/';        // Replace with your Supabase API URL
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxYnJ2Y2JoanRrZXBwZ3dxcm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxODY2NTUsImV4cCI6MjA5Mjc2MjY1NX0.BBOU8zsf5jOY_dsxISwjsotUL2hO-mnDwChJ0cFA9RQ_KEY'; // Replace with your Supabase anon key
 
 let supabaseClient = null;
 try {
-  if (window.supabase && SUPABASE_URL !== 'https://qqbrvcbhjtkeppgwqrnp.supabase.co/rest/v1/') {
+  if (window.supabase) {
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
 } catch (e) {
@@ -19,143 +19,52 @@ try {
 // ====== RAZORPAY CONFIG ======
 const RAZORPAY_KEY = 'YOUR_RAZORPAY_KEY_ID'; // Replace with your Razorpay Key ID
 
-// ====== PRODUCT DATA ======
-const products = [
-  {
-    id: 1,
-    name: 'FC BARCELONA HOME JERSEY',
-    category: 'football',
-    price: 1299,
-    badge: 'BESTSELLER',
-    desc: 'Season 2024/25 • Premium Dry-Fit',
-    emoji: '🔴🔵',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 2,
-    name: 'REAL MADRID AWAY JERSEY',
-    category: 'football',
-    price: 1299,
-    badge: 'NEW',
-    desc: 'Season 2024/25 • Official Style',
-    emoji: '⚪👑',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 3,
-    name: 'MANCHESTER CITY HOME',
-    category: 'football',
-    price: 1199,
-    badge: null,
-    desc: 'Season 2024/25 • Sky Blue Edition',
-    emoji: '🔵🏆',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 4,
-    name: 'LA LAKERS CITY EDITION',
-    category: 'basketball',
-    price: 1499,
-    badge: 'HOT',
-    desc: 'NBA 2024 • Gold & Purple',
-    emoji: '🟡🏀',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 5,
-    name: 'CHICAGO BULLS CLASSIC',
-    category: 'basketball',
-    price: 1399,
-    badge: null,
-    desc: 'NBA Classic • Red & Black',
-    emoji: '🐂🔴',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 6,
-    name: 'INDIA T20 BLUE',
-    category: 'cricket',
-    price: 999,
-    badge: 'BESTSELLER',
-    desc: 'Team India Official Style',
-    emoji: '🇮🇳🏏',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 7,
-    name: 'CSK YELLOW WARRIORS',
-    category: 'cricket',
-    price: 899,
-    badge: null,
-    desc: 'IPL Special Edition',
-    emoji: '💛🦁',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 8,
-    name: 'ARGENTINA 1986 RETRO',
-    category: 'retro',
-    price: 1599,
-    badge: 'RETRO',
-    desc: 'World Cup Legend Edition',
-    emoji: '🇦🇷⚽',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 9,
-    name: 'BRAZIL 1970 RETRO',
-    category: 'retro',
-    price: 1599,
-    badge: 'RETRO',
-    desc: 'The Greatest XI • Pelé Era',
-    emoji: '🟡🟢',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 10,
-    name: 'PSG AWAY JERSEY',
-    category: 'football',
-    price: 1199,
-    badge: null,
-    desc: 'Season 2024/25 • Ligue 1',
-    emoji: '🔵🔴',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 11,
-    name: 'GOLDEN STATE WARRIORS',
-    category: 'basketball',
-    price: 1399,
-    badge: 'NEW',
-    desc: 'NBA 2024 • City Edition',
-    emoji: '💙💛',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 12,
-    name: 'ENGLAND RETRO 1996',
-    category: 'retro',
-    price: 1499,
-    badge: null,
-    desc: 'Classic Three Lions',
-    emoji: '🏴󠁧󠁢󠁥󠁮󠁧󠁿⚽',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  }
-];
-
 // ====== STATE ======
 let cart = JSON.parse(localStorage.getItem('se7en_cart') || '[]');
 let currentFilter = 'all';
+let allProducts = [];
 let pendingProduct = null;
 let selectedSize = null;
 let customerAddress = null;
 
 // ====== INIT ======
-document.addEventListener('DOMContentLoaded', () => {
-  renderProducts(products);
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadProductsFromSupabase();
   updateCartUI();
   initNavScroll();
 });
+
+// ====== LOAD PRODUCTS FROM SUPABASE ======
+async function loadProductsFromSupabase() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('products')
+      .select('*')
+      .eq('active', true);
+
+    if (error) throw error;
+
+    allProducts = data.map(p => ({
+      id: p.id,
+      name: p.name,
+      category: p.category,
+      price: p.price,
+      badge: p.badge,
+      desc: p.description,
+      image: p.image_url,
+      sizes: p.sizes || ['S', 'M', 'L', 'XL', 'XXL']
+    }));
+
+    renderProducts(allProducts);
+
+  } catch (err) {
+    console.error('Failed to load products from Supabase:', err);
+    document.getElementById('productsGrid').innerHTML = `
+      <p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:40px">
+        Unable to load products. Please check your Supabase connection.
+      </p>`;
+  }
+}
 
 // ====== NAVBAR SCROLL ======
 function initNavScroll() {
@@ -175,13 +84,16 @@ function renderProducts(items) {
   grid.innerHTML = items.map(p => `
     <div class="product-card" data-category="${p.category}" style="animation: fadeUp 0.4s ease both">
       <div class="product-image-wrap">
-        <div class="product-placeholder">${p.emoji}</div>
+        ${p.image
+          ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">`
+          : `<div class="product-placeholder">👕</div>`
+        }
         ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
       </div>
       <div class="product-info">
-        <div class="product-category">${p.category.toUpperCase()}</div>
+        <div class="product-category">${p.category ? p.category.toUpperCase() : ''}</div>
         <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
+        <div class="product-desc">${p.desc || ''}</div>
         <div class="product-footer">
           <div class="product-price">₹${p.price.toLocaleString('en-IN')}</div>
           <button class="add-cart-btn" onclick="openSizeModal(${p.id})">ADD TO CART</button>
@@ -196,13 +108,13 @@ function filterProducts(cat, btn) {
   currentFilter = cat;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
+  const filtered = cat === 'all' ? allProducts : allProducts.filter(p => p.category === cat);
   renderProducts(filtered);
 }
 
 // ====== SIZE MODAL ======
 function openSizeModal(productId) {
-  pendingProduct = products.find(p => p.id === productId);
+  pendingProduct = allProducts.find(p => p.id === productId);
   selectedSize = null;
   document.getElementById('sizeProductName').textContent = pendingProduct.name;
   document.getElementById('sizeGrid').innerHTML = pendingProduct.sizes.map(s => `
@@ -237,7 +149,6 @@ function addToCart(product, size) {
   saveCart();
   updateCartUI();
   showToast(`${product.name} (${size}) added to cart!`);
-  // Auto open cart
   setTimeout(() => toggleCart(true), 300);
 }
 
@@ -270,11 +181,9 @@ function cartTotal() {
 }
 
 function updateCartUI() {
-  // Count
   const totalItems = cart.reduce((s, i) => s + i.qty, 0);
   document.getElementById('cartCount').textContent = totalItems;
 
-  // Items
   const itemsEl = document.getElementById('cartItems');
   const footerEl = document.getElementById('cartFooter');
 
@@ -287,7 +196,12 @@ function updateCartUI() {
   footerEl.style.display = 'block';
   itemsEl.innerHTML = cart.map(item => `
     <div class="cart-item">
-      <div class="cart-item-img">${item.emoji}</div>
+      <div class="cart-item-img">
+        ${item.image
+          ? `<img src="${item.image}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover">`
+          : '👕'
+        }
+      </div>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-size">SIZE: ${item.size}</div>
@@ -367,7 +281,6 @@ function initRazorpay() {
     currency: 'INR',
     name: 'SE7EN',
     description: `Jersey Order – ${cart.length} item(s)`,
-    image: '', // Add your logo URL here if needed
     prefill: {
       name: customerAddress?.name || '',
       contact: customerAddress?.phone || ''
@@ -391,8 +304,7 @@ function initRazorpay() {
   };
 
   if (typeof Razorpay === 'undefined') {
-    // Demo mode if Razorpay not loaded
-    showToast('Razorpay not loaded. Simulating order...');
+    showToast('Razorpay not configured yet. Simulating order...');
     setTimeout(() => {
       const fakeId = 'DEMO_' + Date.now();
       saveOrderToSupabase(fakeId);
@@ -408,10 +320,10 @@ function initRazorpay() {
   rzp.open();
 }
 
-// ====== SUPABASE ORDER SAVE ======
+// ====== SAVE ORDER TO SUPABASE ======
 async function saveOrderToSupabase(paymentId) {
   if (!supabaseClient) {
-    console.log('Supabase not configured. Order would be saved:', {
+    console.log('Supabase not configured. Order details:', {
       payment_id: paymentId,
       customer: customerAddress,
       items: cart,
@@ -431,13 +343,13 @@ async function saveOrderToSupabase(paymentId) {
       status: 'confirmed',
       created_at: new Date().toISOString()
     });
-    if (error) console.error('Supabase error:', error);
+    if (error) console.error('Supabase order save error:', error);
   } catch (e) {
     console.error('Order save error:', e);
   }
 }
 
-// ====== SUCCESS ======
+// ====== ORDER SUCCESS ======
 function showOrderSuccess(paymentId) {
   document.getElementById('successOrderId').textContent = 'Payment ID: ' + paymentId;
   openModal('successModal');
@@ -459,7 +371,7 @@ function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
 }
 
-// ====== TOAST ======
+// ====== TOAST NOTIFICATION ======
 function showToast(msg) {
   const existing = document.querySelector('.se7en-toast');
   if (existing) existing.remove();
