@@ -4,12 +4,12 @@
 // ===========================
 
 // ====== SUPABASE CONFIG ======
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';       // Replace with your Supabase project URL
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your Supabase anon key
+const SUPABASE_URL = 'https://qqbrvcbhjtkeppgwqrnp.supabase.co/rest/v1/';       // Replace with your Supabase project URL
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxYnJ2Y2JoanRrZXBwZ3dxcm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxODY2NTUsImV4cCI6MjA5Mjc2MjY1NX0.BBOU8zsf5jOY_dsxISwjsotUL2hO-mnDwChJ0cFA9RQ_KEY'; // Replace with your Supabase anon key
 
 let supabaseClient = null;
 try {
-  if (window.supabase && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+  if (window.supabase && SUPABASE_URL !== 'https://qqbrvcbhjtkeppgwqrnp.supabase.co/rest/v1/') {
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
 } catch (e) {
