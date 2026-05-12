@@ -1142,6 +1142,12 @@ img { display:block; width:100%; }
 }
 
 /* ===== RESPONSIVE ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch device — hide custom cursor completely */
+  .mag-cursor, .mag-cursor-dot { display: none !important; }
+  body { cursor: auto !important; }
+  a, button { cursor: pointer !important; }
+}
 @media (max-width:1024px) {
   .about { grid-template-columns:1fr; }
   .about-left { min-height:280px; }

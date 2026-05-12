@@ -4,8 +4,8 @@
 // ===========================
 
 // ====== SUPABASE CONFIG ======
-const SUPABASE_URL = 'https://qqbrvcbhjtkeppgwqrnp.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxYnJ2Y2JoanRrZXBwZ3dxcm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxODY2NTUsImV4cCI6MjA5Mjc2MjY1NX0.BBOU8zsf5jOY_dsxISwjsotUL2hO-mnDwChJ0cFA9RQ';
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
 
 let supabaseClient = null;
 try {
@@ -45,6 +45,9 @@ function initLoader() {
 
 // ====== MAGNETIC CURSOR ======
 function initCursor() {
+  // Skip on touch devices
+  if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
   const ring = document.getElementById('magCursor');
   const dot  = document.getElementById('magCursorDot');
 
