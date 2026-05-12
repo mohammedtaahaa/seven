@@ -30,7 +30,7 @@ CREATE TABLE orders (
 4. Go to **Project Settings → API**
 5. Copy your **Project URL** and **anon/public key**
 6. Open `app.js` and replace:
-   - `YOUR_SUPABASE_URL` → your Project URL
+   - `https://qqbrvcbhjtkeppgwqrnp.supabase.co` → your Project URL
    - `YOUR_SUPABASE_ANON_KEY` → your anon key
 
 ---
