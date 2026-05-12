@@ -23,17 +23,47 @@
 
 /* ===== RESET ===== */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; font-size:16px; }
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
 body {
   background: var(--black);
   color: var(--white);
   font-family: var(--font-body);
   overflow-x: hidden;
-  cursor: none;
+  -webkit-overflow-scrolling: touch;
 }
 a { text-decoration:none; color:inherit; }
 button { cursor:none; }
 img { display:block; width:100%; }
+
+/* ===== MOBILE PERFORMANCE ===== */
+@media (hover: none) and (pointer: coarse) {
+  * { touch-action: manipulation; }
+  body { cursor: auto !important; }
+  a, button {
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: rgba(209,0,0,0.15);
+    user-select: none;
+  }
+  .mag-cursor, .mag-cursor-dot { display: none !important; }
+  .product-card:hover { transform: none; }
+  .product-card::after { display: none; }
+  .contact-card:hover { transform: none; }
+  .cta-primary:hover { transform: none; }
+  .cta-primary::before { display: none; }
+  .hero-line { transition: none !important; }
+  .filter-tab { transition: all 0.15s !important; }
+  /* Always show quick add on mobile */
+  .product-quick-add {
+    transform: translateY(0) !important;
+    position: static !important;
+    background: var(--black-3) !important;
+    border-top: 1px solid var(--red) !important;
+  }
+}
 
 /* ===== MAGNETIC CURSOR ===== */
 .mag-cursor {
@@ -87,6 +117,7 @@ img { display:block; width:100%; }
   z-index: 10000;
   display: flex; align-items:center; justify-content:center;
   transition: opacity 0.6s var(--ease), visibility 0.6s;
+  will-change: opacity;
 }
 .loader.done { opacity:0; visibility:hidden; }
 .loader-inner { text-align:center; }
@@ -318,6 +349,8 @@ img { display:block; width:100%; }
   display: block;
   position: relative;
   transition: letter-spacing 0.4s var(--ease);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .hero-line:hover { letter-spacing: 8px; }
 .hero-line--outline {
@@ -544,6 +577,9 @@ img { display:block; width:100%; }
   overflow: hidden;
   group: true;
   animation: fadeUp 0.5s var(--ease) both;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .product-card::after {
   content:'';

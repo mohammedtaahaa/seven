@@ -4,8 +4,8 @@
 // ===========================
 
 // ====== SUPABASE CONFIG ======
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://qqbrvcbhjtkeppgwqrnp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxYnJ2Y2JoanRrZXBwZ3dxcm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxODY2NTUsImV4cCI6MjA5Mjc2MjY1NX0.BBOU8zsf5jOY_dsxISwjsotUL2hO-mnDwChJ0cFA9RQ';
 
 let supabaseClient = null;
 try {
@@ -37,10 +37,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // ====== LOADER ======
 function initLoader() {
-  const fill = document.getElementById('loaderFill');
+  const fill   = document.getElementById('loaderFill');
   const loader = document.getElementById('loader');
+  const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+  // Faster load on mobile
+  const duration = isMobile ? 800 : 1800;
   setTimeout(() => { fill.style.width = '100%'; }, 100);
-  setTimeout(() => { loader.classList.add('done'); }, 1800);
+  setTimeout(() => { loader.classList.add('done'); }, duration);
 }
 
 // ====== MAGNETIC CURSOR ======
@@ -117,7 +121,7 @@ function initCursor() {
 function initNavScroll() {
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
-  });
+  }, { passive: true });
 }
 
 // ====== LOAD PRODUCTS FROM SUPABASE ======
@@ -163,8 +167,10 @@ function renderProducts(items) {
     return;
   }
 
+  const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
   grid.innerHTML = items.map((p, i) => `
-    <div class="product-card" style="animation-delay:${i * 0.06}s">
+    <div class="product-card" style="animation-delay:${isMobile ? 0 : i * 0.06}s">
       <div class="product-img-wrap">
         ${p.image
           ? `<img src="${p.image}" alt="${p.name}" loading="lazy"/>`
