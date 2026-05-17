@@ -56,12 +56,34 @@ img { display:block; width:100%; }
   .cta-primary::before { display: none; }
   .hero-line { transition: none !important; }
   .filter-tab { transition: all 0.15s !important; }
-  /* Always show quick add on mobile */
-  .product-quick-add {
-    transform: translateY(0) !important;
-    position: static !important;
-    background: var(--black-3) !important;
-    border-top: 1px solid var(--red) !important;
+
+  /* Fix product image — show full image, hide overlay */
+  .product-quick-add { display: none !important; }
+  .product-img-wrap {
+    height: 200px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .product-img-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+  }
+  .product-card:hover .product-img-wrap img {
+    transform: none !important;
+  }
+  .product-emoji {
+    font-size: 4rem;
+    opacity: 0.4;
+  }
+  /* Show ADD button inside product info on mobile */
+  .product-footer .quick-add-btn {
+    display: block !important;
+    padding: 10px 16px !important;
   }
 }
 
@@ -595,12 +617,19 @@ img { display:block; width:100%; }
   background: var(--black-3);
   position: relative;
   overflow: hidden;
-  display:flex; align-items:center; justify-content:center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 .product-img-wrap img {
-  width:100%; height:100%;
-  object-fit:cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
   transition: transform 0.6s var(--ease);
+  display: block;
+  flex-shrink: 0;
 }
 .product-card:hover .product-img-wrap img { transform:scale(1.07); }
 .product-emoji {
@@ -1178,12 +1207,6 @@ img { display:block; width:100%; }
 }
 
 /* ===== RESPONSIVE ===== */
-@media (hover: none) and (pointer: coarse) {
-  /* Touch device — hide custom cursor completely */
-  .mag-cursor, .mag-cursor-dot { display: none !important; }
-  body { cursor: auto !important; }
-  a, button { cursor: pointer !important; }
-}
 @media (max-width:1024px) {
   .about { grid-template-columns:1fr; }
   .about-left { min-height:280px; }
